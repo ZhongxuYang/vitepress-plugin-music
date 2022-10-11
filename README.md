@@ -19,6 +19,7 @@ yarn add -D vitepress-plugin-music
 // .vitepress/theme/index.ts
 
 import vitepressMusic from 'vitepress-plugin-music'
+import 'vitepress-plugin-music/lib/assets/index.css'
 
 const list = [
   {

@@ -1,15 +1,20 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1665415276235') format('truetype');
+  src: url('iconfont.ttf?t=1665456182384') format('truetype');
 }
 
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 26px;
+  font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-shouqi:before {
+  content: "\e655";
+}
+
 .icon-gedan:before {
   content: "\e636";
 }

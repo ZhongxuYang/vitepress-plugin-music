@@ -2,7 +2,10 @@
   <div class="vitepress-music" :class="playClassName">
     <div class="vitepress-music__drawer">
       <div class="vitepress-music__drawer-header">
-        <span>Playlist</span>
+        <div>
+          <span class="iconfont icon-shouqi" @click="handleShowList"></span>
+          <span>Playlist</span>
+        </div>
         <span>Total {{list?.length || 0}}</span>
       </div>
       <ul class="vitepress-music__drawer-content">
@@ -151,7 +154,18 @@ watch(() => playInfo.value.status, (value) => {
       margin-bottom: 5px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       color: var(--vp-c-text-2);
+      div{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .icon-shouqi{
+          font-size: 10px;
+          margin-right: 5px;
+          cursor: pointer;
+        }
+      }
       /* display: none; */
     }
     &-content{

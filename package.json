@@ -1,6 +1,6 @@
 {
   "name": "vitepress-plugin-music",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "music player plugin for vitepress",
   "keywords": [
     "documentation",
@@ -17,19 +17,20 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/vitepress-plugin-music.js",
-      "require": "./dist/vitepress-plugin-music.umd.cjs"
-    }
+      "import": "./lib/vitepress-plugin-music.js",
+      "require": "./lib/vitepress-plugin-music.umd.cjs"
+    },
+    "./*": "./*"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ZhongxuYang/vitepress-plugin-music.git"
   },
   "homepage": "https://github.com/ZhongxuYang/vitepress-plugin-music.git",
-  "main": "./dist/vitepress-plugin-music.umd.cjs",
-  "types": "./dist/index.d.ts",
+  "main": "./lib/vitepress-plugin-music.umd.cjs",
+  "types": "./lib/index.d.ts",
   "files": [
-    "dist"
+    "lib"
   ],
   "scripts": {
     "build": "vite build && tsc -p tsconfig.build.json"
