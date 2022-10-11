@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1665415276235') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 26px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-gedan:before {
+  content: "\e636";
+}
+
+.icon-changpianji:before {
+  content: "\e616";
+}
+
+.icon-shangyishou:before {
+  content: "\e718";
+}
+
+.icon-xiayishou:before {
+  content: "\e719";
+}
+

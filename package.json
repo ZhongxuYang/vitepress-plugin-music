@@ -1,0 +1,45 @@
+{
+  "name": "vitepress-plugin-music",
+  "version": "0.0.1",
+  "description": "music player plugin for vitepress",
+  "keywords": [
+    "documentation",
+    "audio",
+    "music",
+    "player",
+    "mp3",
+    "bgm",
+    "vue",
+    "vitepress"
+  ],
+  "author": "ZhongxuYang <himatthew@foxmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZhongxuYang/vitepress-plugin-music.git"
+  },
+  "homepage": "https://github.com/ZhongxuYang/vitepress-plugin-music.git",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild"
+  },
+  "peerDependencies": {
+    "vitepress": ">=1.x"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4",
+    "unbuild": "^0.8.11",
+    "vitepress": "^1.0.0-alpha.18"
+  }
+}
