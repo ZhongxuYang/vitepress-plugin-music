@@ -1,6 +1,6 @@
 {
   "name": "vitepress-plugin-music",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "music player plugin for vitepress",
   "keywords": [
     "documentation",
