@@ -30,7 +30,7 @@
 <script lang="ts" setup>
 import {ref, computed, watch, nextTick} from 'vue'
 import './static/iconfont/iconfont.css'
-import type {SongInfo} from './index.d'
+import type {SongInfo} from './type'
 
 const props = defineProps<{
   list: SongInfo[]

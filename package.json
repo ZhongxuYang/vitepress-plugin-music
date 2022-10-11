@@ -17,8 +17,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": "./dist/vitepress-plugin-music.js",
+      "require": "./dist/vitepress-plugin-music.umd.cjs"
     }
   },
   "repository": {
@@ -26,20 +26,24 @@
     "url": "git+https://github.com/ZhongxuYang/vitepress-plugin-music.git"
   },
   "homepage": "https://github.com/ZhongxuYang/vitepress-plugin-music.git",
-  "main": "./dist/index.cjs",
+  "main": "./dist/vitepress-plugin-music.umd.cjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "unbuild"
+    "build": "vite build && tsc -p tsconfig.build.json"
   },
   "peerDependencies": {
     "vitepress": ">=1.x"
   },
   "devDependencies": {
+    "@types/node": "^18.8.4",
+    "postcss-advanced-variables": "^3.0.1",
+    "postcss-easings": "^3.0.1",
+    "postcss-import": "^15.0.0",
+    "postcss-nested": "^6.0.0",
     "typescript": "^4.8.4",
-    "unbuild": "^0.8.11",
     "vitepress": "^1.0.0-alpha.18"
   }
 }

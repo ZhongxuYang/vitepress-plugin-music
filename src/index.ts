@@ -1,6 +1,6 @@
 import {render, createVNode} from 'vue'
 import MusicCom from './template.vue'
-import type {SongInfo} from './index.d'
+import type {SongInfo} from './type'
 
 const vitepressMusic = (list: SongInfo[] = []) => {
   if (typeof window === 'undefined') return

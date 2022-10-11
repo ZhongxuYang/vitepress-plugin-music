@@ -11,7 +11,8 @@
     "lib": ["esnext", "dom"],
     "types": [
       "@types/node",
-    ]
+    ],
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
