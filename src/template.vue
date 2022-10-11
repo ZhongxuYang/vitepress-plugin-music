@@ -26,7 +26,7 @@
       <span class="iconfont icon-xiayishou" @click="handleChangePlayIndex(playInfo.currentIndex + 1)"></span>
       <span class="iconfont icon-gedan" @click="handleShowList"></span>
     </div>
-    <audio ref="audioRef" :src="currentSongInfo.file" controls="controls" loop="loop" preload="auto" />
+    <audio ref="audioRef" :src="currentSongInfo.file" controls="controls" preload="auto" @ended="handleChangePlayIndex(playInfo.currentIndex + 1)" />
   </div>
 </template>
 
@@ -128,6 +128,7 @@ watch(() => playInfo.value.status, (value) => {
     }
     span{
       transition: 500ms;
+      font-size: 20px;
       &:hover{
         color: var(--vp-c-brand);
       }
@@ -150,6 +151,8 @@ watch(() => playInfo.value.status, (value) => {
     transform: scale(0);
     transition: 200ms transform;
     border-radius: 3px 0 0 3px;
+    display: flex;
+    flex-direction: column;
     &-header{
       margin-bottom: 5px;
       display: flex;
@@ -169,6 +172,7 @@ watch(() => playInfo.value.status, (value) => {
       /* display: none; */
     }
     &-content{
+      overflow: auto;
       li{
         display: flex;
         cursor: pointer;
@@ -183,6 +187,8 @@ watch(() => playInfo.value.status, (value) => {
         }
         :nth-child(1){
           flex-grow: 1;
+          width: 0;
+          padding-right: 5px;
         }
         :nth-child(2){
           width: 50px;

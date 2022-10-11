@@ -8,6 +8,9 @@
   <a href="https://github.com/vuejs/vitepress-plugin-music/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/vitepress-plugin-music.svg" alt="License"></a>
 </p>
 
+## Demo
+<img src="./docs/static/record.gif" />
+
 ## Install
 ```sh
 yarn add -D vitepress-plugin-music
