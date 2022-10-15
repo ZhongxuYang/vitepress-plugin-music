@@ -21,6 +21,7 @@ yarn add -D vitepress-plugin-music
 ```ts
 // .vitepress/theme/index.ts
 
+import DefaultTheme from "vitepress/theme"
 import vitepressMusic from 'vitepress-plugin-music'
 import 'vitepress-plugin-music/lib/css/index.css'
 
@@ -38,6 +39,7 @@ const list = [
 ]
 
 export default {
+  ...DefaultTheme,
   enhanceApp: (ctx) => {
     vitepressMusic(list)
   }
