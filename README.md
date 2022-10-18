@@ -3,7 +3,7 @@
 > music player plugin for vitepress
 
 <p align="center">
-  <img src="https://img.shields.io/npm/dm/vitepress-plugin-nprogress.svg" alt="Downloads"></a>
+  <img src="https://img.shields.io/npm/dm/vitepress-plugin-music.svg" alt="Downloads"></a>
   <a href="https://www.npmjs.com/package/vitepress-plugin-music"><img src="https://img.shields.io/npm/v/vitepress-plugin-music.svg" alt="Version"></a>
   <a href="https://github.com/vuejs/vitepress-plugin-music/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/vitepress-plugin-music.svg" alt="License"></a>
 </p>
