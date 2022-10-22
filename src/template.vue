@@ -6,18 +6,24 @@
           <span class="iconfont icon-shouqi" @click="handleShowList"></span>
           <span>Playlist</span>
         </div>
-        <span>Total {{list?.length || 0}}</span>
+        <span>Total {{audioList?.length || 0}}</span>
       </div>
       <ul class="vitepress-music__drawer-content">
-        <li 
-          v-for="(item, index) in list" 
-          :key="item.name" 
-          :class="{active: playInfo.currentIndex === index}"
-          @click="handleChangePlayIndex(index)"
-        >
-          <div>{{item.name}}</div>
-          <div>{{item.author}}</div>
-        </li>
+        <template v-for="(item, index) in audioList">
+          <li
+            v-if="!item.hide"
+            :key="item.name" 
+            :class="{
+              active: playInfo.currentIndex === index,
+              error: playInfo.errorIndexList.includes(index),
+              playing: isPlay && playInfo.currentIndex === index,
+            }"
+            @click="handleChangePlayIndex(index)"
+          >
+            <div>{{item.name}}</div>
+            <div>{{item.author}}</div>
+          </li>
+        </template>
       </ul>
     </div>
     <div class="vitepress-music__trigger">
@@ -26,13 +32,21 @@
       <span class="iconfont icon-xiayishou" @click="handleChangePlayIndex(playInfo.currentIndex + 1)"></span>
       <span class="iconfont icon-gedan" @click="handleShowList"></span>
     </div>
-    <audio ref="audioRef" :src="currentSongInfo.file" controls="controls" preload="auto" @ended="handleChangePlayIndex(playInfo.currentIndex + 1)" />
+    <audio ref="audioRef"
+      :src="currentSongInfo.file"
+      controls="controls"
+      preload="auto"
+      @ended="handleChangePlayIndex(playInfo.currentIndex + 1)"
+      @error="handleAudioError()"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import {ref, computed, watch, nextTick} from 'vue'
+import {audioVolumeFade} from './utils/audio'
 import './static/iconfont/iconfont.css'
+import type {Ref} from 'vue'
 import type {SongInfo} from './type'
 
 const props = defineProps<{
@@ -49,7 +63,9 @@ const playInfo = ref({
   status: PlayStatus.stop,
   showList: false,
   currentIndex: 0,
+  errorIndexList: [],
 })
+const audioList = computed(() => props.list.filter(i => !i.hide))
 const isPlay = computed(() => playInfo.value.status === PlayStatus.play)
 const isPause = computed(() => playInfo.value.status === PlayStatus.pause)
 const isStop = computed(() => playInfo.value.status === PlayStatus.stop)
@@ -59,7 +75,7 @@ const playClassName = computed(() => ({
   'is-stop': isStop.value,
   'is-show-list': playInfo.value.showList,
 }))
-const currentSongInfo = computed(() => props.list[playInfo.value.currentIndex])
+const currentSongInfo = computed(() => audioList.value[playInfo.value.currentIndex])
 
 const handleChangePlayStatus = () => {
   playInfo.value.status = isPlay.value ? PlayStatus.pause : PlayStatus.play
@@ -68,22 +84,31 @@ const handleShowList = () => {
   playInfo.value.showList = !playInfo.value.showList
 }
 
-const audioRef = ref()
+const audioRef: Ref<HTMLAudioElement> = ref()
 const handleChangePlayIndex = (newIndex: number) => {
+  if (newIndex === playInfo.value.currentIndex) return handleChangePlayStatus()
   playInfo.value.status = PlayStatus.stop
-  playInfo.value.currentIndex = newIndex < 0 ? props.list.length - 1 : newIndex > props.list.length - 1 ? 0 : newIndex
+  playInfo.value.currentIndex = newIndex < 0 ? audioList.value.length - 1 : newIndex > audioList.value.length - 1 ? 0 : newIndex
   nextTick(() => playInfo.value.status = PlayStatus.play)
 }
+const handleAudioError = () => {
+  const {errorIndexList, currentIndex} = playInfo.value
+  if (!errorIndexList.includes(currentIndex)) errorIndexList.push(currentIndex)
+  if (errorIndexList.length < audioList.value.length) handleChangePlayIndex(currentIndex + 1)
+}
 
-watch(() => playInfo.value.status, (value) => {
+watch(() => playInfo.value.status, async (value) => {
   switch (value) {
     case PlayStatus.play:
       audioRef.value.play()
+      audioVolumeFade(audioRef.value, true)
       break
     case PlayStatus.pause:
+      await audioVolumeFade(audioRef.value, false)
       audioRef.value.pause()
       break
     case PlayStatus.stop:
+      await audioVolumeFade(audioRef.value, false)
       audioRef.value.pause()
       break
   
@@ -103,6 +128,16 @@ watch(() => playInfo.value.status, (value) => {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@keyframes fade-in {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
   }
 }
 .vitepress-music{
@@ -167,6 +202,10 @@ watch(() => playInfo.value.status, (value) => {
           font-size: 10px;
           margin-right: 5px;
           cursor: pointer;
+          transition: 500ms;
+          &:hover{
+            color: var(--vp-c-brand);
+          }
         }
       }
       /* display: none; */
@@ -174,10 +213,12 @@ watch(() => playInfo.value.status, (value) => {
     &-content{
       overflow: auto;
       li{
+        position: relative;
         display: flex;
         cursor: pointer;
         padding: 2px 0;
         color: var(--vp-c-text-1);
+        overflow: hidden;
         >*{
           flex-wrap: nowrap;
           flex-shrink: 0;
@@ -196,6 +237,34 @@ watch(() => playInfo.value.status, (value) => {
         }
         &.active{
           color: var(--vp-c-brand);
+        }
+        &.error{
+          color: var(--vp-c-red-dimm-1);
+          text-decoration-line: line-through;
+        }
+        &:hover{
+          &:after{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--vp-c-bg-alt);
+            color: var(--vp-c-brand);
+            text-align: center;
+            font-style: oblique;
+            animation: fade-in 500ms forwards;
+          }
+          &.playing:after{
+            content: 'click to pause';
+          }
+          &.error:after{
+            content: 'click to re-request';
+            color: var(--vp-c-red-dimm-1);
+          }
+          &:not(.playing, .error):after{
+            content: 'click to play';
+          }
         }
       }
     }

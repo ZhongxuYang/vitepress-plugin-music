@@ -3,4 +3,5 @@ export interface SongInfo {
   author: string,
   file: string,
   mins?: string,
+  hide?: boolean,
 }

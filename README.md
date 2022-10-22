@@ -25,7 +25,7 @@ import DefaultTheme from "vitepress/theme"
 import vitepressMusic from 'vitepress-plugin-music'
 import 'vitepress-plugin-music/lib/css/index.css'
 
-const list = [
+const playlist = [
   {
     name: 'song1',
     author: 'author1',
@@ -35,15 +35,26 @@ const list = [
     name: 'song2',
     author: 'author2',
     file: 'https://***.***.***/song2.mp3',
+    hide: true
   },
 ]
 
 export default {
   ...DefaultTheme,
   enhanceApp: (ctx) => {
-    vitepressMusic(list)
+    vitepressMusic(playlist)
   }
 }
 ```
 
 Then you can use `vitepress-plugin-music` ! 🎉
+
+## Change Log
+
+> `v0.0.9`
+- Automatically jumps when resource loading fails.
+- The volume fades in and out.
+- Tap a song that's playing in the list to pause it.
+- Add hide attribute to playlist.
+- Playlist style updated.
+
